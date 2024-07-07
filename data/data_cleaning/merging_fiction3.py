@@ -6,7 +6,7 @@ from functions import *
 
 # %%
 # Get HCA fairytales
-with open('data/hca_edited_data.json', 'r') as f:
+with open('annotation/hca_data.json', 'r') as f:
     hca = json.load(f)
 
 hca = pd.DataFrame.from_dict(hca)
@@ -16,7 +16,7 @@ hca.head()
 
 # %%
 # Get fiction 2 corpus, take only the prose (i.e., hemingway)
-with open('data/fiction_2.json', 'r') as f:
+with open('annotation/fiction_2.json', 'r') as f:
     f2 = json.load(f)
 
 f2 = pd.DataFrame.from_dict(f2)
@@ -29,12 +29,11 @@ f2 = f2[['avg_concreteness', 'avg_arousal', 'avg_valence', 'avg_dominance',
        'SENTENCE_ENGLISH', 'id', 'Auditory.mean', 'Gustatory.mean',
        'Haptic.mean', 'Interoceptive.mean', 'Olfactory.mean', 'Visual.mean',
        'CATEGORY', 'vader', 'ANNOTATOR_1', 'ANNOTATOR_2', 'concreteness', 'avg_imageability']].copy()
-
 f2.tail()
 
  #%%
  # Get the hymns
-with open('data/hymns_data.json', 'r') as f:
+with open('annotation/hymns_data.json', 'r') as f:
     hymns = json.load(f)
 
 hymns = pd.DataFrame.from_dict(hymns)
@@ -43,7 +42,7 @@ hymns.head()
 
 # %%
 # Get the poems (Plath)
-with open('data/plath_data_recomputed.json', 'r') as f:
+with open('annotation/plath_data.json', 'r') as f:
     plath = json.load(f)
 
 plath = pd.DataFrame.from_dict(plath)
