@@ -15,8 +15,8 @@ The corpus was annotated for valence on a sentence basis by at least 2 annotator
 | **Poetry**   | 40  | 1,579 | 11,576         | 1965  |
 
 
-<a href="https://chc.au.dk"><img src="https://github.com/centre-for-humanities-computing/literary_evocation/blob/main/figures/human_rob_fiction4.png" width="60%" align="center"/></a>
-*distribtion of human and model scores in the corpus*
+<a href="https://chc.au.dk"><img src="https://github.com/centre-for-humanities-computing/literary_evocation/blob/main/figures/human_rob_fiction4.png" width="80%" align="center"/></a>
+*Distribution of human and model scores in the corpus*
 
 We compare this fiction corpus again nonfiction texts (across genres)
 
