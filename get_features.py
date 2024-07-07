@@ -1,13 +1,13 @@
 
+
 # %%
 # 
 from utils import *
 from functions import *
 
-
 # %%
 # set input path for data
-input_path = 'data/emobank_raw.json'
+input_path = 'data/emobank_data.json'
 title = input_path.split('/')[1].split('_')[0]
 print('data treated:', title.upper())
 # texts should contain sentences and SA annotated scores
@@ -26,7 +26,6 @@ df.head()
 df = df.loc[df['SENTENCE'].str.len() > 3]
 
 len(df)
-
 # %%
 # PART 1: loading dicts, getting feature values
 print('# PART 1: loading dicts, getting feature values')
@@ -49,17 +48,15 @@ with open('resources/sensorimotor_norms_dict.json', 'r') as f:
 print('loaded sensorimotor lexicon, len:', len(sensori_dict))
 
 # and get the imageability dict from MRC psycholinguistics database
-with open('Resources/mrc_psychol_dict.json', 'r') as f:
+with open('resources/mrc_psychol_dict.json', 'r') as f:
     dict_mrc = json.load(f)
 print('loaded imageability lexicon, len:', len(dict_mrc))
 
-# this one needs some extra cleaning, since keys are not lemmatized
-
 # %%
 words = ['dog', 'feeling', 'stomach', 'outside', 'tree', 'heart', 'stone']
-print('interoceptive values test')
+print('dict values test')
 for word in words:
-    print(word, sensori_dict[word]['Interoceptive.mean'])
+    print(word, dict_mrc[word]['imag'])
 
 # %%
 

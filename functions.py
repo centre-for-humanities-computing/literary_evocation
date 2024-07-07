@@ -359,7 +359,7 @@ def plotly_viz_correlation_improved(df, first, second, canon_col_name, w, h, hov
 
 
 # Adding plotting scatteplots function
-def plot_scatters(df, scores_list, var, color, w, h, hue=False, remove_outliers=False, outlier_percentile=100, show_corr_values=False):
+def plot_scatters(df, scores_list, var, color, w, h, remove_outliers=False, outlier_percentile=100, show_corr_values=False):
     num_plots = len(scores_list)
     num_rows = 1
     num_cols = num_plots // num_rows
@@ -369,9 +369,6 @@ def plot_scatters(df, scores_list, var, color, w, h, hue=False, remove_outliers=
     fig, axes_list = plt.subplots(num_rows, num_cols, figsize=(w, h))
     axes_list = axes_list
 
-    if hue == None:
-        hue = 'False'
-
     for index, score in enumerate(scores_list):
         df = df.loc[df[score].notnull()]
 
@@ -380,7 +377,7 @@ def plot_scatters(df, scores_list, var, color, w, h, hue=False, remove_outliers=
             df = df.loc[df[score] <= percentile]
         
         sns.scatterplot(data=df, x=var, y=score, ax=axes_list[index],
-                        color=color, hue = hue, s= 35, alpha= 0.3, palette='rocket')
+                        color=color, s= 35, alpha= 0.3, palette='rocket', legend=False)
             
         # I want to add the spearman corr as title of each sublot
         if show_corr_values == True:

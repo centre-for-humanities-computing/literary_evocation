@@ -1,11 +1,15 @@
 # %%
+import os
+os.getcwd()
+#os.chdir('/Users/au324704/Desktop/literary_evocation/')
+# %% 
 from utils import *
 from functions import *
 
 # set out path for visualizations
 output_path = 'figures/'
 # set input path for data
-input_path =  'data/emobank_raw.json'
+input_path =  'data/emobank_data.json'
 # make a save-title
 save_title = input_path.split('/')[-1].split('_')[0]
 
@@ -31,7 +35,7 @@ data = pd.DataFrame.from_dict(all_data)
 if save_title == 'emobank':
     data = data.loc[data['category'] != 'SemEval']
     # and add the human arousal assessment
-    data['avg_harousal'] = data['AROUSAL_HUMAN_EB']
+    #data['avg_harousal'] = data['AROUSAL_HUMAN_EB']
 print(len(data))
 data.head()
 
@@ -337,7 +341,6 @@ for measure in measure_list:
 # the whole data (not divided into categories)
 # and visualizing it
 thresholds = [0, 5]
-#scores_list = ['avg_arousal', 'avg_concreteness', 'avg_imageability', 'avg_interoceptive']
 
 # going back to the original (certainly) unfiltered dataframe -- 'data'
 df['HUMAN_NORM'] = normalize(df['HUMAN'], scale_zero_to_ten=False)
@@ -365,6 +368,7 @@ if save_title in column_map:
         category_df = df.loc[df[column_map[save_title]] == category]
 
         for threshold in thresholds:
+            print('\n')
             category_data_threshold = {}
 
             # Filter data based on category and threshold
@@ -380,6 +384,7 @@ if save_title in column_map:
                 corr = stats.spearmanr(data_filtered_for_s_len_dropna['ROBERTA_HUMAN_DIFF'], data_filtered_for_s_len_dropna[measure])
                 measure_results[measure] = {'correlation': round(corr[0], 3), 'p-value': round(corr[1], 5)}
                 print(category, 'T:', threshold, measure, 'correlation::', round(corr[0], 3), 'p', round(corr[1], 5))
+        print('\n')
 
 # %%
 # We just want the correlation of the whole data with the 5 word sentence threshold

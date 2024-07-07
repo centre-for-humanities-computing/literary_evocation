@@ -34,10 +34,16 @@ from sklearn.metrics import root_mean_squared_error
 
 
 # Roberta
-#!pip install sentencepiece
-#!pip install protobuf
 from transformers import pipeline
 
 # VADER
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+
+# if encountering issues w. paths etc, use:
+# import sys
+# import os
+# # Get the directory of the current script
+# current_dir = os.path.dirname('/Users/au324704/Desktop/literary_evocation/')
+# sys.path.append(current_dir)
