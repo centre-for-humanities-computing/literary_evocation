@@ -2,7 +2,7 @@
 ''''''
 # functions for sentiment analysis (dictionary-based methods)
 # and for plotting (adjusted from figs.py)
-# for the Danish HCA SA study
+# for the SA study
 
 ''''''
 

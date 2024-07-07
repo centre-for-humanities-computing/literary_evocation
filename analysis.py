@@ -1,7 +1,4 @@
-# %%
-import os
-os.getcwd()
-#os.chdir('/Users/au324704/Desktop/literary_evocation/')
+
 # %% 
 from utils import *
 from functions import *

@@ -20,7 +20,7 @@ mean_cols = [x for x in sensori.columns if x.endswith('mean')]
 mean_cols
 
 # %%
-# we might not want all the sensorimotor values, so we filter them out
+# we do not want all the sensorimotor values, so we filter them out
 filtered_cols = ['Auditory.mean',
  'Gustatory.mean',
  'Haptic.mean',
