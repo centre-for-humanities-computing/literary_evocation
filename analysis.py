@@ -343,13 +343,6 @@ thresholds = [0, 5]
 df['HUMAN_NORM'] = normalize(df['HUMAN'], scale_zero_to_ten=False)
 df['ROBERTA_HUMAN_DIFF'] = abs(abs(df['HUMAN_NORM']) - abs(df['tr_xlm_roberta']))
 
-# uncomment to plot all scatterplots
-# for threshold in thresholds:
-#     print('no. words/sentence threshold:', threshold)
-#     data_filtered = df.loc[(df['SENTENCE_LENGTH'] > threshold)]
-#     print('len of df:', len(data_filtered), ' texts')
-#     plot_scatters(data_filtered, scores_list, 'ROBERTA_HUMAN_DIFF', 'pink', 20, 6, hue=False, remove_outliers=False, outlier_percentile=100, show_corr_values=True)
-
 # correlation at different thresholds per each category
 # this is only for the data with categories
 if save_title in column_map:
