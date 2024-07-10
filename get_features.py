@@ -1,4 +1,14 @@
 
+"""
+script to retrieve the features per sentence and do Sentiment Analysis
+we analyse each corpus seperately
+
+Procedure
+- Getting data ready
+- Loading dictionaries and retrieving values
+- Sentiment Analysis (RoBERTa)
+- Saving to json
+"""
 
 # %%
 # 
@@ -12,7 +22,6 @@ title = input_path.split('/')[1].split('_')[0]
 print('data treated:', title.upper())
 # texts should contain sentences and SA annotated scores
 
-# %%
 with open(input_path, 'r') as f:
     all_data = json.load(f)
 
@@ -20,12 +29,6 @@ df = pd.DataFrame.from_dict(all_data)
 print('len data:', len(df))
 df.head()
 
-# %%
-
-[x for x in df['SENTENCE'].astype(str) if len(x) < 3]
-df = df.loc[df['SENTENCE'].str.len() > 3]
-
-len(df)
 # %%
 # PART 1: loading dicts, getting feature values
 print('# PART 1: loading dicts, getting feature values')
@@ -53,13 +56,14 @@ with open('resources/mrc_psychol_dict.json', 'r') as f:
 print('loaded imageability lexicon, len:', len(dict_mrc))
 
 # %%
+# TEST cell
 words = ['dog', 'feeling', 'stomach', 'outside', 'tree', 'heart', 'stone']
 print('dict values test')
 for word in words:
     print(word, dict_mrc[word]['imag'])
 
 # %%
-
+# retrieving values
 concretenesses_avg, all_concretenesses = [], []
 valences_avg, arousals_avg, dominances_avg = [], [], []
 
@@ -160,9 +164,8 @@ for i, row in df.iterrows():
     imageability_avg.append(np.nanmean(imageabilities))
 
 
-
 # %%
-# Make columns
+# Make columns in the df
 df['avg_concreteness'] = concretenesses_avg
 df['concreteness'] = all_concretenesses
 
@@ -179,10 +182,9 @@ df['Visual.mean'] = visual_list
 
 df['avg_imageability'] = imageability_avg
 
-
 df.head()
 # %%
-# checkup
+# CHECKUP
 df = df.copy().reset_index(drop=True)
 print(len(df))
 df.head()
@@ -194,9 +196,8 @@ print('# PART 2: sentiment analysis')
 
 xlm_model = pipeline(model="cardiffnlp/twitter-xlm-roberta-base-sentiment")
 
-
 # %%
-#
+# SA scoring
 if title in datasets_english: # make sure we're using the english sentence (also for Danish texts)
         use_col = 'SENTENCE'
         # Ensure text is strings
@@ -224,15 +225,8 @@ for s in df[use_col]:
 xlm_converted_scores = conv_scores(xlm_labels, xlm_scores, ["positive", "neutral", "negative"])
 df["tr_xlm_roberta"] = xlm_converted_scores
 
-
 # %%
-# get the VADER scores
-vader_scores = sentimarc_vader(df[use_col].values, untokd=False)
-df['vader'] = vader_scores
-df.head()
-
-# %%
-# Check for nan values
+# Check df for nan values
 nan_counts = df.isna().sum()
 print("NaN counts per column:")
 print(nan_counts)
@@ -241,17 +235,11 @@ nan_rows_annotators = df[df[['HUMAN', 'tr_xlm_roberta']].isna().any(axis=1)]
 print("Rows with NaN values in SA columns:")
 print(nan_rows_annotators)
 
-# %%
-df.columns
-# %%
 df.head()
-len(df)
 # %%
 # dump to json
 with open(input_path, 'w') as f:
     json.dump(df.to_dict(), f)
 # %%
 print(f'treated {title.upper()}: \n VAD, concreteness, sensorimotor and imageability calculated \n -- json updated!')
-
-
 # %%

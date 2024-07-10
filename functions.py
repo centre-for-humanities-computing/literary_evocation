@@ -1,15 +1,11 @@
-
-''''''
-# functions for sentiment analysis (dictionary-based methods)
-# and for plotting (adjusted from figs.py)
-# for the SA study
-
-''''''
+"""
+functions for sentiment analysis and for plotting
+"""
 
 import os
 from utils import *
 
-
+# GENERAL
 
 # normalization
 def normalize(ts, scale_zero_to_ten=False):
@@ -22,7 +18,6 @@ def normalize(ts, scale_zero_to_ten=False):
         return ts10
     else:
         return ts01
-
     
 # Function to safely convert to float
 def convert_to_float(value):
@@ -30,7 +25,58 @@ def convert_to_float(value):
         return float(value)
     except (ValueError, TypeError):
         return np.nan
+    
 
+# For SENTIMENT ANALYSIS
+
+# to convert transformer scores to the same scale as the dictionary-based scores
+def conv_scores(lab, sco, spec_lab): #insert exact labelnames in order positive, negative og as positive, neutral, negative
+    
+    converted_scores = []
+    
+    if len(spec_lab) == 2:
+        spec_lab[0] = "positive"
+        spec_lab[1] = "negative"
+
+        for i in range(0, len(lab)):
+            if lab[i] == "positive":
+                converted_scores.append(sco[i])
+            else:
+                converted_scores.append(-sco[i])
+            
+    if len(spec_lab) == 3:
+        spec_lab[0] = "positive"
+        spec_lab[1] = "neutral"
+        spec_lab[2] = "negative"
+        
+        for i in range(0, len(lab)):
+            if lab[i] == "positive":
+                converted_scores.append(sco[i])
+            elif lab[i] == "neutral":
+                converted_scores.append(0)
+            else:
+                converted_scores.append(-sco[i])
+    
+    return converted_scores
+
+
+# and VADER 
+sid =  SentimentIntensityAnalyzer()
+
+def sentimarc_vader(text, untokd=True):
+    if untokd:
+        sents = nltk.sent_tokenize(text)
+        print(len(sents))
+    else: sents = text
+    arc=[]
+    for sentence in sents:
+        compound_pol = sid.polarity_scores(sentence)['compound']
+        arc.append(compound_pol)
+    return arc
+
+
+
+# for PLOTTING
 
 ## plotting DISTRIBUTIONS
 def plot_kdeplots_or_histograms(df, scores_list, type, plottitle, plts_per_row, l, h):
@@ -252,9 +298,6 @@ def histplot_two_groups(implicit_df, explicit_df, measure_list, labels, l, h, ti
 
 
 
-
-# Plotting
-
 ###
 #
 # Plotly visualisation of a correlation,
@@ -404,53 +447,3 @@ def plot_scatters(df, scores_list, var, color, w, h, remove_outliers=False, outl
 
     plt.show()
 
-
-
-
-
-# For SENTIMENT ANALYSIS
-
-# to convert transformer scores to the same scale as the dictionary-based scores
-def conv_scores(lab, sco, spec_lab): #insert exact labelnames in order positive, negative og as positive, neutral, negative
-    
-    converted_scores = []
-    
-    if len(spec_lab) == 2:
-        spec_lab[0] = "positive"
-        spec_lab[1] = "negative"
-
-        for i in range(0, len(lab)):
-            if lab[i] == "positive":
-                converted_scores.append(sco[i])
-            else:
-                converted_scores.append(-sco[i])
-            
-    if len(spec_lab) == 3:
-        spec_lab[0] = "positive"
-        spec_lab[1] = "neutral"
-        spec_lab[2] = "negative"
-        
-        for i in range(0, len(lab)):
-            if lab[i] == "positive":
-                converted_scores.append(sco[i])
-            elif lab[i] == "neutral":
-                converted_scores.append(0)
-            else:
-                converted_scores.append(-sco[i])
-    
-    return converted_scores
-
-
-# and VADER 
-sid =  SentimentIntensityAnalyzer()
-
-def sentimarc_vader(text, untokd=True):
-    if untokd:
-        sents = nltk.sent_tokenize(text)
-        print(len(sents))
-    else: sents = text
-    arc=[]
-    for sentence in sents:
-        compound_pol = sid.polarity_scores(sentence)['compound']
-        arc.append(compound_pol)
-    return arc
