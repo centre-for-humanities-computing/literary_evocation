@@ -14,11 +14,6 @@ We present the **Fiction4 corpus** of literary texts, spanning 109 individual te
 The corpus consists of 3 main authors, Sylvia Plath for poetry, Ernest Hemingway for prose and H.C. Andersen for fairytales. Hymns represent a heterogenous colleciton from Danish official church hymnbooks from 1798-1873.
 The corpus was annotated for valence on a sentence basis by at least 2 annotators/sentence.
 
-
-<a href="https://chc.au.dk"><img src="https://github.com/centre-for-humanities-computing/literary_evocation/blob/main/figures/human_rob_fiction4.png" width="60%" align="center"/></a>
-
-*Distribution of human and model scores in the corpus*
-
 Full Fiction4 corpus data in `\data\fiction4_data.json`
 
 We compare this fiction corpus again nonfiction texts (across genres)
