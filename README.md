@@ -16,6 +16,7 @@ The corpus was annotated for valence on a sentence basis by at least 2 annotator
 
 
 <a href="https://chc.au.dk"><img src="https://github.com/centre-for-humanities-computing/literary_evocation/blob/main/figures/human_rob_fiction4.png" width="60%" align="center"/></a>
+
 *Distribution of human and model scores in the corpus*
 
 Full Fiction4 corpus data in `\data\fiction4_data.json`
